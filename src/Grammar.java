@@ -42,6 +42,19 @@ public class Grammar{
     }
 
 
+
+	public void imprim_rec(int level, StringBuilder builder, Node node){
+		for(int i=0; i<level; ++i){
+			builder.append("---");
+		}
+		builder.append(node.toString()+"\n");
+		if(node.getLeft() != null){
+			imprim_rec(level+1, builder,node.getLeft());
+			if(node.getRight() != null)
+				imprim_rec(level+1, builder,node.getRight());
+		}
+	}
+
 	@Override
 	public String toString(){
 		return null;
@@ -58,6 +71,11 @@ public class Grammar{
 
         System.out.println(test.imprimerArbre(0));
         System.out.println(test.imprimerArbre(1));
+
+			StringBuilder buildstr = new StringBuilder();
+			test.imprim_rec(0, buildstr,new Conc(new Union(new Atom('B',0,AtomType.TERMINAL),new
+                Atom('B',0,AtomType.TERMINAL)),new Atom('C',0,AtomType.TERMINAL)));
+			System.out.println(buildstr.toString());
 
     }
 
