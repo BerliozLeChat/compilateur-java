@@ -1,7 +1,5 @@
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Queue;
 
 public class Grammar{
 	private List<Node> rules;
@@ -40,24 +38,6 @@ public class Grammar{
 	}
 
 	public static void main(String[] args) {
-		/*
-		Grammar test = new Grammar();
-
-		test.add(new Atom("A",0,AtomType.TERMINAL));
-
-		test.add(new Conc(new Union(new Atom("B",0,AtomType.TERMINAL),new
-				Atom("B",0,AtomType.TERMINAL)),new Atom("C",0,AtomType.TERMINAL)));
-
-
-		System.out.println(test.imprimerArbre(0));
-		System.out.println(test.imprimerArbre(1));
-
-		StringBuilder buildstr = new StringBuilder();
-		test.imprim_rec(0, buildstr,new Conc(new Union(new Atom("B",0,AtomType.TERMINAL),new
-				Atom("B",0,AtomType.TERMINAL)),new Atom("C",0,AtomType.TERMINAL)));
-		System.out.println(buildstr.toString());
-		*/
-		
 		Grammar G = new Grammar();
 		G.add(new Conc(
 				new Star(
@@ -65,7 +45,7 @@ public class Grammar{
 								new Conc(
 										new Conc(
 												new Atom("N", 0, AtomType.NONTERMINAL), 
-												new Atom(">", 0, AtomType.TERMINAL)), 
+												new Atom("->", 0, AtomType.TERMINAL)), 
 										new Atom("E", 0, AtomType.NONTERMINAL)), 
 								new Atom(",", 1, AtomType.TERMINAL))), 
 			new Atom(";",  0,  AtomType.TERMINAL))
