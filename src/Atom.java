@@ -1,17 +1,17 @@
 public class Atom extends Node{
 
-    private char code;
+    private String code;
     private int action;
     private AtomType atype;
 
-	public Atom(char code,int action,AtomType atype){
+	public Atom(String code,int action,AtomType atype){
 	    super(null,null);
 		this.code = code;
 		this.action = action;
 		this.atype = atype;
 	}
 
-    public char getCode() {
+    public String getCode() {
         return code;
     }
 

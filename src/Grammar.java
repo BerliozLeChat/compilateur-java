@@ -43,18 +43,18 @@ public class Grammar{
 		/*
 		Grammar test = new Grammar();
 
-		test.add(new Atom('A',0,AtomType.TERMINAL));
+		test.add(new Atom("A",0,AtomType.TERMINAL));
 
-		test.add(new Conc(new Union(new Atom('B',0,AtomType.TERMINAL),new
-				Atom('B',0,AtomType.TERMINAL)),new Atom('C',0,AtomType.TERMINAL)));
+		test.add(new Conc(new Union(new Atom("B",0,AtomType.TERMINAL),new
+				Atom("B",0,AtomType.TERMINAL)),new Atom("C",0,AtomType.TERMINAL)));
 
 
 		System.out.println(test.imprimerArbre(0));
 		System.out.println(test.imprimerArbre(1));
 
 		StringBuilder buildstr = new StringBuilder();
-		test.imprim_rec(0, buildstr,new Conc(new Union(new Atom('B',0,AtomType.TERMINAL),new
-				Atom('B',0,AtomType.TERMINAL)),new Atom('C',0,AtomType.TERMINAL)));
+		test.imprim_rec(0, buildstr,new Conc(new Union(new Atom("B",0,AtomType.TERMINAL),new
+				Atom("B",0,AtomType.TERMINAL)),new Atom("C",0,AtomType.TERMINAL)));
 		System.out.println(buildstr.toString());
 		*/
 		
@@ -64,27 +64,27 @@ public class Grammar{
 						new Conc(
 								new Conc(
 										new Conc(
-												new Atom('N', 0, AtomType.NONTERMINAL), 
-												new Atom('>', 0, AtomType.TERMINAL)), 
-										new Atom('E', 0, AtomType.NONTERMINAL)), 
-								new Atom(',', 1, AtomType.TERMINAL))), 
-			new Atom(';',  0,  AtomType.TERMINAL))
+												new Atom("N", 0, AtomType.NONTERMINAL), 
+												new Atom(">", 0, AtomType.TERMINAL)), 
+										new Atom("E", 0, AtomType.NONTERMINAL)), 
+								new Atom(",", 1, AtomType.TERMINAL))), 
+			new Atom(";",  0,  AtomType.TERMINAL))
 		);
-		G.add(new Atom('I',0,AtomType.TERMINAL));
+		G.add(new Atom("IDNTER",0,AtomType.TERMINAL));
 		
 		G.add(new Conc(
 				new Star(
 						new Conc(
-								new Atom('+',0,AtomType.TERMINAL),
-								new Atom('T',0,AtomType.NONTERMINAL))),
-				new Atom('T',0,AtomType.NONTERMINAL)));
+								new Atom("+",0,AtomType.TERMINAL),
+								new Atom("T",0,AtomType.NONTERMINAL))),
+				new Atom("T",0,AtomType.NONTERMINAL)));
 		
 		G.add(new Conc(
 				new Star(
 						new Conc(
-								new Atom('.', 0, AtomType.TERMINAL),
-								new Atom('I', 0, AtomType.NONTERMINAL))), 
-				new Atom('I', 0, AtomType.NONTERMINAL)));
+								new Atom(".", 0, AtomType.TERMINAL),
+								new Atom("F", 0, AtomType.NONTERMINAL))), 
+				new Atom("F", 0, AtomType.NONTERMINAL)));
 		
 		G.add(
 				new Union(
@@ -92,31 +92,31 @@ public class Grammar{
 								new Union(
 										new Union(
 												new Conc(
-														new Atom('|', 0, AtomType.TERMINAL),
+														new Atom("(/", 0, AtomType.TERMINAL),
 														new Conc(
-																new Atom('E', 0, AtomType.NONTERMINAL),
-																new Atom('|', 0, AtomType.TERMINAL)
+																new Atom("E", 0, AtomType.NONTERMINAL),
+																new Atom("/)", 0, AtomType.TERMINAL)
 														)
 												),
 												new Conc(
-													new Atom('[', 0, AtomType.TERMINAL),
+													new Atom("[", 0, AtomType.TERMINAL),
 													new Conc(
-															new Atom('E', 0, AtomType.NONTERMINAL),
-															new Atom(']', 0, AtomType.TERMINAL)
+															new Atom("E", 0, AtomType.NONTERMINAL),
+															new Atom("]", 0, AtomType.TERMINAL)
 													)
 												)
 										),
 										new Conc(
-												new Atom('(', 0, AtomType.TERMINAL),
+												new Atom("(", 0, AtomType.TERMINAL),
 												new Conc(
-														new Atom('E', 0, AtomType.NONTERMINAL),
-														new Atom(')', 0, AtomType.TERMINAL)
+														new Atom("E", 0, AtomType.NONTERMINAL),
+														new Atom(")", 0, AtomType.TERMINAL)
 												)
 										)
 								),
-								new Atom('R', 0, AtomType.TERMINAL)
+								new Atom("ELTER", 0, AtomType.TERMINAL)
 						),
-					new Atom('I', 0, AtomType.TERMINAL)
+					new Atom("IDNTER", 0, AtomType.TERMINAL)
 				)
 		);
 		
