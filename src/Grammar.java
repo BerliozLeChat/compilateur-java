@@ -15,31 +15,10 @@ public class Grammar{
 	}
 
 	public String imprimerArbre(int idrule){
-        StringBuilder buildTree = new StringBuilder();
-        Node node;
-        String niveau = "";
-	    Node rule = rules.get(idrule);
-        Queue<Node> file = new ArrayDeque<>();
-
-        file.offer(rule);
-        //affichage de la racine
-        buildTree.append(niveau+"--->"+rule.toString()+"\n");
-
-        while(!file.isEmpty()){
-            niveau += "---"; //étage suivant
-            node = file.poll();
-            if(node.getLeft()!=null) {
-                file.offer(node.getLeft());
-                buildTree.append(niveau+"--->"+node.getLeft().toString()+"\n");
-                if(node.getRight()!=null) {
-                    file.offer(node.getRight());
-                    buildTree.append(niveau+"--->"+node.getRight().toString()
-                            +"\n");
-                }
-            }
-        }
-        return buildTree.toString();
-    }
+		StringBuilder buildTree = new StringBuilder();
+		imprim_rec(0,buildTree,rules.get(idrule));
+		return buildTree.toString();
+	}
 
 
 
@@ -60,23 +39,89 @@ public class Grammar{
 		return null;
 	}
 
-    public static void main(String[] args) {
-        Grammar test = new Grammar();
+	public static void main(String[] args) {
+		/*
+		Grammar test = new Grammar();
 
-        test.add(new Atom('A',0,AtomType.TERMINAL));
+		test.add(new Atom('A',0,AtomType.TERMINAL));
 
-        test.add(new Conc(new Union(new Atom('B',0,AtomType.TERMINAL),new
-                Atom('B',0,AtomType.TERMINAL)),new Atom('C',0,AtomType.TERMINAL)));
+		test.add(new Conc(new Union(new Atom('B',0,AtomType.TERMINAL),new
+				Atom('B',0,AtomType.TERMINAL)),new Atom('C',0,AtomType.TERMINAL)));
 
 
-        System.out.println(test.imprimerArbre(0));
-        System.out.println(test.imprimerArbre(1));
+		System.out.println(test.imprimerArbre(0));
+		System.out.println(test.imprimerArbre(1));
 
-			StringBuilder buildstr = new StringBuilder();
-			test.imprim_rec(0, buildstr,new Conc(new Union(new Atom('B',0,AtomType.TERMINAL),new
-                Atom('B',0,AtomType.TERMINAL)),new Atom('C',0,AtomType.TERMINAL)));
-			System.out.println(buildstr.toString());
-
-    }
+		StringBuilder buildstr = new StringBuilder();
+		test.imprim_rec(0, buildstr,new Conc(new Union(new Atom('B',0,AtomType.TERMINAL),new
+				Atom('B',0,AtomType.TERMINAL)),new Atom('C',0,AtomType.TERMINAL)));
+		System.out.println(buildstr.toString());
+		*/
+		
+		Grammar G = new Grammar();
+		G.add(new Conc(
+				new Star(
+						new Conc(
+								new Conc(
+										new Conc(
+												new Atom('N', 0, AtomType.NONTERMINAL), 
+												new Atom('>', 0, AtomType.TERMINAL)), 
+										new Atom('E', 0, AtomType.NONTERMINAL)), 
+								new Atom(',', 1, AtomType.TERMINAL))), 
+			new Atom(';',  0,  AtomType.TERMINAL))
+		);
+		G.add(new Atom('I',0,AtomType.TERMINAL));
+		
+		G.add(new Conc(
+				new Star(
+						new Conc(
+								new Atom('+',0,AtomType.TERMINAL),
+								new Atom('T',0,AtomType.NONTERMINAL))),
+				new Atom('T',0,AtomType.NONTERMINAL)));
+		
+		G.add(new Conc(
+				new Star(
+						new Conc(
+								new Atom('.', 0, AtomType.TERMINAL),
+								new Atom('I', 0, AtomType.NONTERMINAL))), 
+				new Atom('I', 0, AtomType.NONTERMINAL)));
+		
+		G.add(
+				new Union(
+						new Union(
+								new Union(
+										new Union(
+												new Conc(
+														new Atom('|', 0, AtomType.TERMINAL),
+														new Conc(
+																new Atom('E', 0, AtomType.NONTERMINAL),
+																new Atom('|', 0, AtomType.TERMINAL)
+														)
+												),
+												new Conc(
+													new Atom('[', 0, AtomType.TERMINAL),
+													new Conc(
+															new Atom('E', 0, AtomType.NONTERMINAL),
+															new Atom(']', 0, AtomType.TERMINAL)
+													)
+												)
+										),
+										new Conc(
+												new Atom('(', 0, AtomType.TERMINAL),
+												new Conc(
+														new Atom('E', 0, AtomType.NONTERMINAL),
+														new Atom(')', 0, AtomType.TERMINAL)
+												)
+										)
+								),
+								new Atom('R', 0, AtomType.TERMINAL)
+						),
+					new Atom('I', 0, AtomType.TERMINAL)
+				)
+		);
+		
+		for(int i = 0; i < G.rules.size(); ++i)
+			System.out.println("A[" + i + "] \n" + G.imprimerArbre(i));
+	}
 
 } 
