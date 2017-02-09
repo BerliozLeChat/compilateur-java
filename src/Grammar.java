@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Grammar{
-	private List<Node> rules;
+	protected List<Node> rules;
 
 	public Grammar(){
 		rules = new ArrayList<Node>();
@@ -17,8 +17,6 @@ public class Grammar{
 		imprim_rec(0,buildTree,rules.get(idrule));
 		return buildTree.toString();
 	}
-
-
 
 	public void imprim_rec(int level, StringBuilder builder, Node node){
 		for(int i=0; i<level; ++i){
@@ -36,6 +34,52 @@ public class Grammar{
 	public String toString(){
 		return null;
 	}
+	
+	
+
+	public boolean Analyse(Node node){
+		if(node instanceof Conc){
+			if(Analyse(node.getLeft())){
+				return Analyse(node.getRight());
+			}
+			else {
+				return false;
+			}
+		}
+		else if(node instanceof Union){
+			if(node.getLeft()){
+				return true;
+			}
+			else {
+				return Analyse(node.getRight());
+			}
+		}
+		else if(node instanceof Star){
+			return Analyse(node.getLeft());
+		}
+		else if(node instanceof Un){
+			return Analyse(node.getLeft());
+		}
+		else if(node instanceof Atome){
+			if((Atome)node.getAtype() == AtomType.TERMINAL){
+				if((Atome)node.getCode() == code){
+					if((Atome)node.getAction() != null)
+						(Atome)node.getAction().exec();
+					Scan();
+					return true;
+				}
+				else
+					return false;
+			}
+			else if((Atome)node.getAtype() == AtomType.TERMINAL){
+				if(Analyse(rules.get(node.getCode()))){
+					if((Atome)node.getAction() != null)
+						(Atome)node.getAction().exec();
+				} else
+					return false;
+			}
+	}
+	
 
 	public static void main(String[] args) {
 		Grammar G = new Grammar();

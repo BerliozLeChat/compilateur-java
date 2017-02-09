@@ -2,7 +2,7 @@ public abstract class Node{
 
     private Node left;
     private Node right;
-
+    
     public Node(Node left, Node right){
         this.left = left;
         this.right = right;
