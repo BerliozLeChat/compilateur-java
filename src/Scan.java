@@ -4,7 +4,8 @@ import java.util.Scanner;
 
 public class Scan{
 	public List<String> symboles = new ArrayList<String>();
-	public List<String> vocabulaire = new ArrayList<String>();
+    public List<String> vocabulairet = new ArrayList<String>();
+    public List<String> vocabulairent = new ArrayList<String>();
 
 	public void scan(){
 		System.out.println("Entrez la règle à scanner");
@@ -27,27 +28,42 @@ public class Scan{
 					scan_rec(rule.substring(1), acc);
 				}else{
 					System.out.println("Symbole non reconnu");
+                    scan_rec(rule.substring(1), acc);
 				}
 			}
 			else if(first == '+' || first == '[' || first == ']' || first == '.' || first == '(' || first == ')'){
 				if(!acc.isEmpty())
-					vocabulaire.add(acc);
+					vocabulairent.add(acc);
 				acc = "";
 				symboles.add(""+first);
 				scan_rec(rule.substring(1), acc);
 			}
 			else if(first == ':'){
+                if(!acc.isEmpty() && !acc.equals(":")) {
+                    vocabulairent.add(acc);
+                    acc="";
+                }
 				acc += first;
 				scan_rec(rule.substring(1), acc);
 			}
 			//Si c'est pas un symbole
+            else if(first =='"') {
+                if(acc.isEmpty())
+                    scan_rec(rule.substring(1), acc);
+                else {
+                    vocabulairet.add(acc);
+                    acc="";
+                    scan_rec(rule.substring(1), acc);
+                }
+
+            }
 			else {
 				acc += first;
 				scan_rec(rule.substring(1), acc);
 			}
 		}
 		else {
-			vocabulaire.add(acc);
+			vocabulairent.add(acc);
 		}
 		
 	}
@@ -59,8 +75,11 @@ public class Scan{
 		System.out.println("Symboles : ");
 		for(String s : sc.symboles)
 			System.out.println(s);
-		System.out.println("Vocabulaire : ");
-		for(String st : sc.vocabulaire)
+		System.out.println("Vocabulaire non terminal : ");
+		for(String st : sc.vocabulairent)
 			System.out.println(st);
+        System.out.println("Vocabulaire terminal : ");
+        for(String snt : sc.vocabulairet)
+            System.out.println(snt);
 	}
 }

@@ -47,7 +47,7 @@ public class Grammar{
 			}
 		}
 		else if(node instanceof Union){
-			if(node.getLeft()){
+			if(node.getLeft()!=null){
 				return true;
 			}
 			else {
@@ -60,24 +60,24 @@ public class Grammar{
 		else if(node instanceof Un){
 			return Analyse(node.getLeft());
 		}
-		else if(node instanceof Atome){
-			if((Atome)node.getAtype() == AtomType.TERMINAL){
-				if((Atome)node.getCode() == code){
-					if((Atome)node.getAction() != null)
-						(Atome)node.getAction().exec();
+	/*	else if(node instanceof Atom){
+			if((Atom)node.getAtype() == AtomType.TERMINAL){
+				if((Atom)node.getCode() == code){
+					if((Atom)node.getAction() != null)
+						(Atom)node.getAction().exec();
 					Scan();
 					return true;
 				}
 				else
 					return false;
 			}
-			else if((Atome)node.getAtype() == AtomType.TERMINAL){
+			else if((Atom)node.getAtype() == AtomType.TERMINAL){
 				if(Analyse(rules.get(node.getCode()))){
-					if((Atome)node.getAction() != null)
-						(Atome)node.getAction().exec();
-				} else
+					if((Atom)node.getAction() != null)
+						(Atom)node.getAction().exec();
+				} */else
 					return false;
-			}
+			//}
 	}
 	
 
