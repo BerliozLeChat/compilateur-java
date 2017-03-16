@@ -1,17 +1,39 @@
 public class Atom extends Node{
 
-    private String code;
+    private Integer code;
     private int action;
     private AtomType atype;
+    private String chaine;
 
-	public Atom(String code,int action,AtomType atype){
+	public Atom(Integer code,int action,AtomType atype, String chaine){
 	    super(null,null);
 		this.code = code;
 		this.action = action;
 		this.atype = atype;
+        this.chaine = chaine;
 	}
 
-    public String getCode() {
+    public void setCode(Integer code) {
+        this.code = code;
+    }
+
+    public void setAction(int action) {
+        this.action = action;
+    }
+
+    public void setAtype(AtomType atype) {
+        this.atype = atype;
+    }
+
+    public String getChaine() {
+        return chaine;
+    }
+
+    public void setChaine(String chaine) {
+        this.chaine = chaine;
+    }
+
+    public Integer getCode() {
         return code;
     }
 

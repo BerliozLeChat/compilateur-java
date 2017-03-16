@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Grammar{
+	private Scan scan;
 	protected List<Node> rules;
 
 	public Grammar(){
@@ -35,53 +36,52 @@ public class Grammar{
 		return null;
 	}
 	
-	
+	public void Analyse() {
+		scan = new Scan();
+		mAnalyse(new Gzero().rules.get(0));
+	}
 
-	public boolean Analyse(Node node){
-		if(node instanceof Conc){
-			if(Analyse(node.getLeft())){
-				return Analyse(node.getRight());
-			}
-			else {
+	public boolean mAnalyse(Node node) {
+		Atom sc = scan.scan();
+		if (node instanceof Conc) {
+			if (mAnalyse(node.getLeft())) {
+				return mAnalyse(node.getRight());
+			} else {
 				return false;
 			}
-		}
-		else if(node instanceof Union){
-			if(node.getLeft()!=null){
+		} else if (node instanceof Union) {
+			if (node.getLeft() != null) {
 				return true;
+			} else {
+				return mAnalyse(node.getRight());
 			}
-			else {
-				return Analyse(node.getRight());
-			}
-		}
-		else if(node instanceof Star){
-			return Analyse(node.getLeft());
-		}
-		else if(node instanceof Un){
-			return Analyse(node.getLeft());
-		}
-	/*	else if(node instanceof Atom){
-			if((Atom)node.getAtype() == AtomType.TERMINAL){
-				if((Atom)node.getCode() == code){
-					if((Atom)node.getAction() != null)
-						(Atom)node.getAction().exec();
-					Scan();
+		} else if (node instanceof Star) {
+			return mAnalyse(node.getLeft());
+		} else if (node instanceof Un) {
+			return mAnalyse(node.getLeft());
+		} else if (node instanceof Atom) {
+			if (((Atom) node).getAtype() == AtomType.TERMINAL) {
+				if (((Atom) node).getChaine() == sc.getChaine()) {
+					if (((Atom) node).getAction() != 0)
+						((Atom) node).getAction().exec();
+					sc = scan.scan();
 					return true;
-				}
-				else
+				} else
 					return false;
+			} else if (((Atom) node).getAtype() == AtomType.NONTERMINAL) {
+				if (mAnalyse(rules.get(((Atom) node).getCode()))) {
+					if (((Atom) node).getAction() != 0)
+						((Atom) node).getAction().exec();
+				} else
+					return false;
+
 			}
-			else if((Atom)node.getAtype() == AtomType.TERMINAL){
-				if(Analyse(rules.get(node.getCode()))){
-					if((Atom)node.getAction() != null)
-						(Atom)node.getAction().exec();
-				} */else
-					return false;
-			//}
+		}
 	}
 	
 
 	public static void main(String[] args) {
+		/*
 		Grammar G = new Grammar();
 		G.add(new Conc(
 				new Star(
@@ -146,6 +146,7 @@ public class Grammar{
 		
 		for(int i = 0; i < G.rules.size(); ++i)
 			System.out.println("A[" + i + "] \n" + G.imprimerArbre(i));
+			*/
 	}
 
 } 

@@ -6,66 +6,74 @@ public class Scan{
 	public List<String> symboles = new ArrayList<String>();
     public List<String> vocabulairet = new ArrayList<String>();
     public List<String> vocabulairent = new ArrayList<String>();
+	private String rule;
 
-	public void scan(){
+	public Scan(){
 		System.out.println("Entrez la règle à scanner");
 		Scanner in = new Scanner(System.in);
-		String rule; 
-		//while(in.hasNextLine()){
-			rule = in.nextLine();
-			scan_rec(rule,"");
-		//}
-		in.close();		
+		rule = in.nextLine();
+		in.close();
+	}
+
+	public Atom scan(){
+		return scan_rec(rule,"");
 	}
 	
-	private void scan_rec(String rule, String acc){
-		if(!rule.isEmpty()){
+	private Atom scan_rec(String rule, String acc) {
+		if (!rule.isEmpty()) {
 			char first = rule.charAt(0);
-			if(first == '='){
-				if(acc.equals("::")){
+			if (first == '=') {
+				if (acc.equals("::")) {
 					acc = "";
 					symboles.add("::=");
-					scan_rec(rule.substring(1), acc);
-				}else{
+					this.rule = rule.substring(1);
+					return new Atom("ELTER", 0, AtomType.TERMINAL, "::=");
+					//scan_rec(rule.substring(1), acc);
+				} else {
 					System.out.println("Symbole non reconnu");
-                    scan_rec(rule.substring(1), acc);
+					scan_rec(rule.substring(1), acc);
 				}
-			}
-			else if(first == '+' || first == '[' || first == ']' || first == '.' || first == '(' || first == ')'){
-				if(!acc.isEmpty())
+			} else if (first == '+' || first == '[' || first == ']' || first == '.' || first == '(' || first == ')') {
+				if (!acc.isEmpty()) {
 					vocabulairent.add(acc);
+					this.rule = rule.substring(1);
+					return new Atom("ELTER", 0, AtomType.TERMINAL, acc);
+				}
 				acc = "";
-				symboles.add(""+first);
-				scan_rec(rule.substring(1), acc);
-			}
-			else if(first == ':'){
-                if(!acc.isEmpty() && !acc.equals(":")) {
-                    vocabulairent.add(acc);
-                    acc="";
-                }
+				symboles.add("" + first);
+				this.rule = rule.substring(1);
+				return new Atom("ELTER", 0, AtomType.TERMINAL, "" + first);
+				//scan_rec(rule.substring(1), acc);
+			} else if (first == ':') {
+				if (!acc.isEmpty() && !acc.equals(":")) {
+					vocabulairent.add(acc);
+					this.rule = rule.substring(1);
+					return new Atom("ELTER", 0, AtomType.TERMINAL, acc);
+				}
 				acc += first;
-				scan_rec(rule.substring(1), acc);
+				//scan_rec(rule.substring(1), acc);
 			}
 			//Si c'est pas un symbole
-            else if(first =='"') {
-                if(acc.isEmpty())
-                    scan_rec(rule.substring(1), acc);
-                else {
-                    vocabulairet.add(acc);
-                    acc="";
-                    scan_rec(rule.substring(1), acc);
-                }
+			else if (first == '"') {
+				if (acc.isEmpty())
+					scan_rec(rule.substring(1), acc);
+				else {
+					vocabulairet.add(acc);
+					this.rule = rule.substring(1);
+					return new Atom("ELTER", 0, AtomType.TERMINAL, acc);
+					//scan_rec(rule.substring(1), acc);
+				}
 
-            }
-			else {
+			} else {
 				acc += first;
 				scan_rec(rule.substring(1), acc);
 			}
-		}
-		else {
+		} else {
 			vocabulairent.add(acc);
+			this.rule = rule.substring(1);
+			return new Atom("ELTER", 0, AtomType.TERMINAL, acc);
 		}
-		
+		return null;
 	}
 	
 	public static void main(String[] args){
