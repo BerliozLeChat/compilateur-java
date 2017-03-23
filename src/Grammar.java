@@ -36,16 +36,18 @@ public class Grammar{
 		return null;
 	}
 	
-	public void Analyse() {
+	public boolean Analyse() {
 		scan = new Scan();
-		mAnalyse(new Gzero().rules.get(0));
+        Gzero gZ = new Gzero();
+        rules = gZ.rules;
+        Atom sc = scan.scan();
+		return mAnalyse(rules.get(0), sc);
 	}
 
-	public boolean mAnalyse(Node node) {
-		Atom sc = scan.scan();
+	public boolean mAnalyse(Node node, Atom sc) {
 		if (node instanceof Conc) {
-			if (mAnalyse(node.getLeft())) {
-				return mAnalyse(node.getRight());
+			if (mAnalyse(node.getLeft(), sc)) {
+				return mAnalyse(node.getRight(),sc );
 			} else {
 				return false;
 			}
@@ -53,100 +55,38 @@ public class Grammar{
 			if (node.getLeft() != null) {
 				return true;
 			} else {
-				return mAnalyse(node.getRight());
+				return mAnalyse(node.getRight(), sc);
 			}
 		} else if (node instanceof Star) {
-			return mAnalyse(node.getLeft());
+			return mAnalyse(node.getLeft(),sc);
 		} else if (node instanceof Un) {
-			return mAnalyse(node.getLeft());
+			return mAnalyse(node.getLeft(),sc);
 		} else if (node instanceof Atom) {
 			if (((Atom) node).getAtype() == AtomType.TERMINAL) {
-				if (((Atom) node).getChaine() == sc.getChaine()) {
-					if (((Atom) node).getAction() != 0)
-						((Atom) node).getAction().exec();
+				//if (((Atom) node).getCode() == sc.getCode()) {
+					if (((Atom) node).getAction() != 0) {
+                        //((Atom) node).getAction().exec();
+                   // }
 					sc = scan.scan();
 					return true;
 				} else
 					return false;
 			} else if (((Atom) node).getAtype() == AtomType.NONTERMINAL) {
-				if (mAnalyse(rules.get(((Atom) node).getCode()))) {
-					if (((Atom) node).getAction() != 0)
-						((Atom) node).getAction().exec();
+				if (mAnalyse(rules.get(((Atom) node).getCode()),sc)) {
+					//if (((Atom) node).getAction() != 0)
+						//((Atom) node).getAction().exec();
 				} else
 					return false;
 
 			}
 		}
+        return false;
 	}
 	
 
 	public static void main(String[] args) {
-		/*
-		Grammar G = new Grammar();
-		G.add(new Conc(
-				new Star(
-						new Conc(
-								new Conc(
-										new Conc(
-												new Atom("N", 0, AtomType.NONTERMINAL), 
-												new Atom("->", 0, AtomType.TERMINAL)), 
-										new Atom("E", 0, AtomType.NONTERMINAL)), 
-								new Atom(",", 1, AtomType.TERMINAL))), 
-			new Atom(";",  0,  AtomType.TERMINAL))
-		);
-		G.add(new Atom("IDNTER",0,AtomType.TERMINAL));
-		
-		G.add(new Conc(
-				new Star(
-						new Conc(
-								new Atom("+",0,AtomType.TERMINAL),
-								new Atom("T",0,AtomType.NONTERMINAL))),
-				new Atom("T",0,AtomType.NONTERMINAL)));
-		
-		G.add(new Conc(
-				new Star(
-						new Conc(
-								new Atom(".", 0, AtomType.TERMINAL),
-								new Atom("F", 0, AtomType.NONTERMINAL))), 
-				new Atom("F", 0, AtomType.NONTERMINAL)));
-		
-		G.add(
-				new Union(
-						new Union(
-								new Union(
-										new Union(
-												new Conc(
-														new Atom("(/", 0, AtomType.TERMINAL),
-														new Conc(
-																new Atom("E", 0, AtomType.NONTERMINAL),
-																new Atom("/)", 0, AtomType.TERMINAL)
-														)
-												),
-												new Conc(
-													new Atom("[", 0, AtomType.TERMINAL),
-													new Conc(
-															new Atom("E", 0, AtomType.NONTERMINAL),
-															new Atom("]", 0, AtomType.TERMINAL)
-													)
-												)
-										),
-										new Conc(
-												new Atom("(", 0, AtomType.TERMINAL),
-												new Conc(
-														new Atom("E", 0, AtomType.NONTERMINAL),
-														new Atom(")", 0, AtomType.TERMINAL)
-												)
-										)
-								),
-								new Atom("ELTER", 0, AtomType.TERMINAL)
-						),
-					new Atom("IDNTER", 0, AtomType.TERMINAL)
-				)
-		);
-		
-		for(int i = 0; i < G.rules.size(); ++i)
-			System.out.println("A[" + i + "] \n" + G.imprimerArbre(i));
-			*/
+        Grammar g = new Grammar();
+        System.out.println(g.Analyse());
 	}
 
 } 

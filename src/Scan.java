@@ -27,28 +27,28 @@ public class Scan{
 					acc = "";
 					symboles.add("::=");
 					this.rule = rule.substring(1);
-					return new Atom("ELTER", 0, AtomType.TERMINAL, "::=");
+					return new Atom(null, 0, AtomType.TERMINAL, "::=");
 					//scan_rec(rule.substring(1), acc);
 				} else {
 					System.out.println("Symbole non reconnu");
-					scan_rec(rule.substring(1), acc);
+					return scan_rec(rule.substring(1), acc);
 				}
 			} else if (first == '+' || first == '[' || first == ']' || first == '.' || first == '(' || first == ')') {
 				if (!acc.isEmpty()) {
 					vocabulairent.add(acc);
 					this.rule = rule.substring(1);
-					return new Atom("ELTER", 0, AtomType.TERMINAL, acc);
+					return new Atom(null, 0, AtomType.NONTERMINAL, acc);
 				}
 				acc = "";
 				symboles.add("" + first);
 				this.rule = rule.substring(1);
-				return new Atom("ELTER", 0, AtomType.TERMINAL, "" + first);
+				return new Atom(null, 0, AtomType.TERMINAL, "" + first);
 				//scan_rec(rule.substring(1), acc);
 			} else if (first == ':') {
 				if (!acc.isEmpty() && !acc.equals(":")) {
 					vocabulairent.add(acc);
 					this.rule = rule.substring(1);
-					return new Atom("ELTER", 0, AtomType.TERMINAL, acc);
+					return new Atom(null, 0, AtomType.NONTERMINAL, acc);
 				}
 				acc += first;
 				//scan_rec(rule.substring(1), acc);
@@ -60,18 +60,18 @@ public class Scan{
 				else {
 					vocabulairet.add(acc);
 					this.rule = rule.substring(1);
-					return new Atom("ELTER", 0, AtomType.TERMINAL, acc);
+					return new Atom(null, 0, AtomType.TERMINAL, acc);
 					//scan_rec(rule.substring(1), acc);
 				}
 
 			} else {
 				acc += first;
-				scan_rec(rule.substring(1), acc);
+				return scan_rec(rule.substring(1), acc);
 			}
 		} else {
 			vocabulairent.add(acc);
 			this.rule = rule.substring(1);
-			return new Atom("ELTER", 0, AtomType.TERMINAL, acc);
+			return new Atom(null, 0, AtomType.TERMINAL, acc);
 		}
 		return null;
 	}

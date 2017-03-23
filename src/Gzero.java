@@ -87,8 +87,8 @@ public final class Gzero extends Grammar {
 				)	
 		);
 		
-		for(int i = 0; i < this.rules.size(); ++i)
-			System.out.println("A[" + i + "] \n" + this.imprimerArbre(i));
+		//for(int i = 0; i < this.rules.size(); ++i)
+		//	System.out.println("A[" + i + "] \n" + this.imprimerArbre(i));
 	}
 
 }
