@@ -4,6 +4,7 @@ public class Atom extends Node{
     private int action;
     private AtomType atype;
     private String chaine;
+    private String valeur;
 
 	public Atom(Integer code,int action,AtomType atype, String chaine){
 	    super(null,null);
@@ -12,6 +13,24 @@ public class Atom extends Node{
 		this.atype = atype;
         this.chaine = chaine;
 	}
+
+    public Atom(Integer code,int action,AtomType atype, String chaine, String
+            valeur){
+        super(null,null);
+        this.code = code;
+        this.action = action;
+        this.atype = atype;
+        this.chaine = chaine;
+        this.valeur = valeur;
+    }
+
+    public String getValeur() {
+        return valeur;
+    }
+
+    public void setValeur(String valeur) {
+        this.valeur = valeur;
+    }
 
     public void setCode(Integer code) {
         this.code = code;
@@ -47,7 +66,7 @@ public class Atom extends Node{
 
     @Override
     public String toString(){
-	    return "Atom : "+code+" "+action+" "+atype;
+	    return "Atom : "+code+" "+action+" "+atype+" "+chaine;
     }
 
     @Override

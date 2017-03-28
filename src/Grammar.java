@@ -63,18 +63,22 @@ public class Grammar{
 			return mAnalyse(node.getLeft(),sc);
 		} else if (node instanceof Atom) {
 			if (((Atom) node).getAtype() == AtomType.TERMINAL) {
-				//if (((Atom) node).getCode() == sc.getCode()) {
+				if (((Atom) node).getChaine().equals(sc.getChaine())) {
 					if (((Atom) node).getAction() != 0) {
                         //((Atom) node).getAction().exec();
-                   // }
-					sc = scan.scan();
-					return true;
+                    }
+                    System.out.println(sc.toString()+" OK");
+                    sc = scan.scan();
+                    if(sc == null)
+                        return true;
+					//return mAnalyse(rules.get(0),sc);
 				} else
 					return false;
 			} else if (((Atom) node).getAtype() == AtomType.NONTERMINAL) {
 				if (mAnalyse(rules.get(((Atom) node).getCode()),sc)) {
 					//if (((Atom) node).getAction() != 0)
 						//((Atom) node).getAction().exec();
+					return true;
 				} else
 					return false;
 

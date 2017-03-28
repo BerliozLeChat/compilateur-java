@@ -15,7 +15,7 @@ public final class Gzero extends Grammar {
 												new Atom(1, 0, AtomType
 														.NONTERMINAL, "N"),
 												new Atom(null, 0, AtomType
-														.TERMINAL, "->")),
+														.TERMINAL, "::=")),
 										new Atom(2, 0, AtomType
 												.NONTERMINAL, "E")),
 								new Atom(null, 1, AtomType.TERMINAL, ","))),

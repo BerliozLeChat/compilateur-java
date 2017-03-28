@@ -31,15 +31,16 @@ public class Scan{
 					//scan_rec(rule.substring(1), acc);
 				} else {
 					System.out.println("Symbole non reconnu");
-					return scan_rec(rule.substring(1), acc);
+					//return scan_rec(rule.substring(1), acc);
 				}
 			} else if (first == '+' || first == '[' || first == ']' || first == '.' || first == '(' || first == ')') {
 				if (!acc.isEmpty()) {
 					vocabulairent.add(acc);
-					this.rule = rule.substring(1);
-					return new Atom(null, 0, AtomType.NONTERMINAL, acc);
+					return new Atom(null, 0, AtomType.NONTERMINAL,"IDNTER",
+							""+acc);
+
 				}
-				acc = "";
+
 				symboles.add("" + first);
 				this.rule = rule.substring(1);
 				return new Atom(null, 0, AtomType.TERMINAL, "" + first);
@@ -47,26 +48,31 @@ public class Scan{
 			} else if (first == ':') {
 				if (!acc.isEmpty() && !acc.equals(":")) {
 					vocabulairent.add(acc);
-					this.rule = rule.substring(1);
-					return new Atom(null, 0, AtomType.NONTERMINAL, acc);
+					//this.rule = rule.substring(1);
+					return new Atom(null, 0, AtomType.NONTERMINAL,"IDNTER",
+                            acc);
 				}
 				acc += first;
-				//scan_rec(rule.substring(1), acc);
+				this.rule = rule.substring(1);
+				return scan_rec(this.rule, acc);
 			}
 			//Si c'est pas un symbole
 			else if (first == '"') {
-				if (acc.isEmpty())
-					scan_rec(rule.substring(1), acc);
+				if (acc.isEmpty()) {
+				    this.rule = rule.substring(1);
+                    return scan_rec(this.rule, acc);
+                }
 				else {
 					vocabulairet.add(acc);
 					this.rule = rule.substring(1);
-					return new Atom(null, 0, AtomType.TERMINAL, acc);
+					return new Atom(null, 0, AtomType.TERMINAL,"ELTER", acc);
 					//scan_rec(rule.substring(1), acc);
 				}
 
 			} else {
 				acc += first;
-				return scan_rec(rule.substring(1), acc);
+                this.rule = rule.substring(1);
+				return scan_rec(this.rule, acc);
 			}
 		} else {
 			vocabulairent.add(acc);
