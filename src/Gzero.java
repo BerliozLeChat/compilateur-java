@@ -91,4 +91,9 @@ public final class Gzero extends Grammar {
 		//	System.out.println("A[" + i + "] \n" + this.imprimerArbre(i));
 	}
 
+	public static void main(String[] args) {
+		Gzero g = new Gzero();
+		for(int i = 0; i < g.rules.size(); ++i)
+			System.out.println("A[" + i + "] \n" + g.imprimerArbre(i));
+	}
 }
