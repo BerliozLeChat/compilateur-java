@@ -3,6 +3,7 @@ import java.util.List;
 
 public class Grammar{
 	private Scan scan;
+    public Atom sc;
 	protected List<Node> rules;
 
 	public Grammar(){
@@ -35,32 +36,34 @@ public class Grammar{
 	public String toString(){
 		return null;
 	}
-	
+
 	public boolean Analyse() {
 		scan = new Scan();
         Gzero gZ = new Gzero();
         rules = gZ.rules;
-        Atom sc = scan.scan();
-		return mAnalyse(rules.get(0), sc);
+        sc = scan.scan();
+		return mAnalyse(rules.get(0));
 	}
 
-	public boolean mAnalyse(Node node, Atom sc) {
+	public boolean mAnalyse(Node node) {
+        if(sc == null)
+            return true;
 		if (node instanceof Conc) {
-			if (mAnalyse(node.getLeft(), sc)) {
-				return mAnalyse(node.getRight(),sc );
+			if (mAnalyse(node.getLeft())) {
+				return mAnalyse(node.getRight());
 			} else {
 				return false;
 			}
 		} else if (node instanceof Union) {
-			if (node.getLeft() != null) {
+			if (mAnalyse(node.getLeft())) {
 				return true;
 			} else {
-				return mAnalyse(node.getRight(), sc);
+				return mAnalyse(node.getRight());
 			}
 		} else if (node instanceof Star) {
-			return mAnalyse(node.getLeft(),sc);
+			return mAnalyse(node.getLeft());
 		} else if (node instanceof Un) {
-			return mAnalyse(node.getLeft(),sc);
+			return mAnalyse(node.getLeft());
 		} else if (node instanceof Atom) {
 			if (((Atom) node).getAtype() == AtomType.TERMINAL) {
 				if (((Atom) node).getChaine().equals(sc.getChaine())) {
@@ -69,13 +72,11 @@ public class Grammar{
                     }
                     System.out.println(sc.toString()+" OK");
                     sc = scan.scan();
-                    if(sc == null)
-                        return true;
-					//return mAnalyse(rules.get(0),sc);
+					return true;
 				} else
 					return false;
 			} else if (((Atom) node).getAtype() == AtomType.NONTERMINAL) {
-				if (mAnalyse(rules.get(((Atom) node).getCode()),sc)) {
+				if (mAnalyse(rules.get(((Atom) node).getCode()))) {
 					//if (((Atom) node).getAction() != 0)
 						//((Atom) node).getAction().exec();
 					return true;

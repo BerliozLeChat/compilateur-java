@@ -24,18 +24,20 @@ public final class Gzero extends Grammar {
 		this.add(new Atom(null,2,AtomType.TERMINAL, "IDNTER"));
 		
 		this.add(new Conc(
+                new Atom(3,0,AtomType.NONTERMINAL, "T"),
 				new Star(
 						new Conc(
 								new Atom(null,0,AtomType.TERMINAL, "+"),
-								new Atom(3,3,AtomType.NONTERMINAL, "T"))),
-				new Atom(3,0,AtomType.NONTERMINAL, "T")));
+								new Atom(3,3,AtomType.NONTERMINAL, "T")))
+				));
 		
 		this.add(new Conc(
+                new Atom(4, 0, AtomType.NONTERMINAL,"F"),
 				new Star(
 						new Conc(
 								new Atom(null, 0, AtomType.TERMINAL, "."),
-								new Atom(4, 4, AtomType.NONTERMINAL, "F"))),
-				new Atom(4, 0, AtomType.NONTERMINAL,"F")));
+								new Atom(4, 4, AtomType.NONTERMINAL, "F")))
+				));
 		
 		this.add(
 				new Union(
