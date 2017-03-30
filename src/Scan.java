@@ -20,7 +20,7 @@ public class Scan{
 	}
 	
 	private Atom scan_rec(String rule, String acc) {
-		if (!rule.isEmpty()) {
+		if (!this.rule.isEmpty()) {
 			char first = rule.charAt(0);
 			if (first == '=') {
 				if (acc.equals("::")) {
@@ -33,7 +33,7 @@ public class Scan{
 					System.out.println("Symbole non reconnu");
 					//return scan_rec(rule.substring(1), acc);
 				}
-			} else if (first == '+' || first == '[' || first == ']' || first == '.' || first == '(' || first == ')') {
+			} else if (first == '+' || first == '[' || first == ']' || first == '.' || first == '(' || first == ')' || first == ';') {
 				if (!acc.isEmpty()) {
 					vocabulairent.add(acc);
 					return new Atom(null, 0, AtomType.NONTERMINAL,"IDNTER",
@@ -76,7 +76,8 @@ public class Scan{
 			}
 		} else {
 			vocabulairent.add(acc);
-			this.rule = rule.substring(1);
+            if(rule.length() > 0)
+			    this.rule = rule.substring(1);
 			return new Atom(null, 0, AtomType.TERMINAL, acc);
 		}
 		return null;
