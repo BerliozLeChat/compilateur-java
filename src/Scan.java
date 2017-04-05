@@ -33,12 +33,13 @@ public class Scan{
 					System.out.println("Symbole non reconnu");
 					//return scan_rec(rule.substring(1), acc);
 				}
-			} else if (first == '+' || first == '[' || first == ']' || first == '.' || first == '(' || first == ')' || first == ';') {
+			} else if (first == '+' || first == '[' || first == ']' || first
+					== '.' || first == '(' || first == ')' || first == ';' ||
+					first == ',') {
 				if (!acc.isEmpty()) {
 					vocabulairent.add(acc);
 					return new Atom(null, 0, AtomType.NONTERMINAL,"IDNTER",
 							""+acc);
-
 				}
 
 				symboles.add("" + first);
@@ -85,16 +86,10 @@ public class Scan{
 	
 	public static void main(String[] args){
 		Scan sc = new Scan();
-		sc.scan();
-		
-		System.out.println("Symboles : ");
-		for(String s : sc.symboles)
-			System.out.println(s);
-		System.out.println("Vocabulaire non terminal : ");
-		for(String st : sc.vocabulairent)
-			System.out.println(st);
-        System.out.println("Vocabulaire terminal : ");
-        for(String snt : sc.vocabulairet)
-            System.out.println(snt);
+		while(!sc.rule.isEmpty()) {
+			Atom a = sc.scan();
+			System.out.println(a.toString());
+		}
+
 	}
 }

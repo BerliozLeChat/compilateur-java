@@ -9,8 +9,5 @@ public class Star extends Node{
 	    return "Star";
     }
 
-    @Override
-    public String afficher(String tmp) {
-        return null;
-    }
+
 }

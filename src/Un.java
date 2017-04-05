@@ -9,8 +9,4 @@ public class Un extends Node{
         return "Un";
     }
 
-    @Override
-    public String afficher(String tmp) {
-        return null;
-    }
 }

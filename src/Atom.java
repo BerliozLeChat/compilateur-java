@@ -68,9 +68,4 @@ public class Atom extends Node{
     public String toString(){
 	    return "Atom : "+code+" "+action+" "+atype+" "+chaine;
     }
-
-    @Override
-    public String afficher(String tmp) {
-        return null;
-    }
 }

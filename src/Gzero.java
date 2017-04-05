@@ -47,7 +47,7 @@ public final class Gzero extends Grammar {
 												new Conc(
 														new Atom(null, 0,
 																AtomType
-																		.TERMINAL, "/"),
+																		.TERMINAL, "(/"),
 														new Conc(
 																new Atom(2,
 																		0,

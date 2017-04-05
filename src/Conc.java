@@ -12,8 +12,4 @@ public class Conc extends Node{
 	    return "Conc";
     }
 
-    @Override
-    public String afficher(String tmp) {
-        return null;
-    }
 }

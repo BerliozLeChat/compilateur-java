@@ -5,6 +5,7 @@ public class Grammar{
 	private Scan scan;
     public Atom sc;
 	protected List<Node> rules;
+	GPLBuilder gpl;
 
 	public Grammar(){
 		rules = new ArrayList<Node>();
@@ -37,12 +38,15 @@ public class Grammar{
 		return null;
 	}
 
-	public boolean Analyse() {
+	public Grammar Analyse() {
+		gpl = new GPLBuilder();
 		scan = new Scan();
         Gzero gZ = new Gzero();
         rules = gZ.rules;
         sc = scan.scan();
-		return mAnalyse(rules.get(0));
+		boolean res =  mAnalyse(rules.get(0));
+		System.out.println(res);
+		return gpl.getGrammar();
 	}
 
 	public boolean mAnalyse(Node node) {
@@ -68,7 +72,7 @@ public class Grammar{
 			if (((Atom) node).getAtype() == AtomType.TERMINAL) {
 				if (((Atom) node).getChaine().equals(sc.getChaine())) {
 					if (((Atom) node).getAction() != 0) {
-                        //((Atom) node).getAction().exec();
+                        gpl.goAction(((Atom) node).getAction(),sc);
                     }
                     System.out.println(sc.toString()+" OK");
                     sc = scan.scan();
@@ -77,8 +81,8 @@ public class Grammar{
 					return false;
 			} else if (((Atom) node).getAtype() == AtomType.NONTERMINAL) {
 				if (mAnalyse(rules.get(((Atom) node).getCode()))) {
-					//if (((Atom) node).getAction() != 0)
-						//((Atom) node).getAction().exec();
+					if (((Atom) node).getAction() != 0)
+						gpl.goAction(((Atom) node).getAction(),sc);
 					return true;
 				} else
 					return false;
@@ -91,7 +95,7 @@ public class Grammar{
 
 	public static void main(String[] args) {
         Grammar g = new Grammar();
-        System.out.println(g.Analyse());
+        g.Analyse();
 	}
 
 } 

@@ -9,8 +9,4 @@ public class Union extends Node{
         return "Union";
     }
 
-    @Override
-    public String afficher(String tmp) {
-        return null;
-    }
 }

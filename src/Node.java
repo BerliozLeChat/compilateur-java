@@ -16,5 +16,4 @@ public abstract class Node{
         return right;
     }
 
-    public abstract String afficher(String tmp);
 }
