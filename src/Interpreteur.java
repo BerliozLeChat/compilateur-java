@@ -76,13 +76,58 @@ public class Interpreteur {
                 pilex.set(spx, 0);
             }
             c0 = c0 + 1;
+        } else if (pcode.get(c0).equals("INF")) {
+            if (pilex.get(spx - 1) < pilex.get(spx)) {
+                spx = spx - 1;
+                pilex.set(spx, 1);
+            } else {
+                spx = spx - 1;
+                pilex.set(spx, 0);
+            }
+            c0 = c0 + 1;
+        } else if (pcode.get(c0).equals("SUPE")) {
+            if (pilex.get(spx - 1) >= pilex.get(spx)) {
+                spx = spx - 1;
+                pilex.set(spx, 1);
+            } else {
+                spx = spx - 1;
+                pilex.set(spx, 0);
+            }
+            c0 = c0 + 1;
+        } else if (pcode.get(c0).equals("SUP")) {
+            if (pilex.get(spx - 1) > pilex.get(spx)) {
+                spx = spx - 1;
+                pilex.set(spx, 1);
+            } else {
+                spx = spx - 1;
+                pilex.set(spx, 0);
+            }
+            c0 = c0 + 1;
+        } else if (pcode.get(c0).equals("EG")) {
+            if (pilex.get(spx - 1) == pilex.get(spx)) {
+                spx = spx - 1;
+                pilex.set(spx, 1);
+            } else {
+                spx = spx - 1;
+                pilex.set(spx, 0);
+            }
+            c0 = c0 + 1;
         } else if (pcode.get(c0).equals("ADD")) {
             int add = pilex.get(spx)+pilex.get(spx-1);
             pilex.set(spx - 1, add);
             c0 = c0 + 1;
             spx = spx - 1;
+        } else if (pcode.get(c0).equals("SUB")) {
+            int add = pilex.get(spx-1)-pilex.get(spx);
+            pilex.set(spx - 1, add);
+            c0 = c0 + 1;
+            spx = spx - 1;
         } else if (pcode.get(c0).equals("INC")) {
             pilex.set(spx, pilex.get(spx)+1);
+            c0 = c0 + 1;
+        }
+         else if (pcode.get(c0).equals("DEC")) {
+            pilex.set(spx, pilex.get(spx)-1);
             c0 = c0 + 1;
         }
         else{
@@ -91,13 +136,13 @@ public class Interpreteur {
     }
 
     public static void main(String[] args) {
-        List<String> pcode = new ArrayList<>(Arrays.asList("LDA","2","RD",
+        List<String> pcode = new ArrayList<String>(Arrays.asList("LDA","2","RD",
                 "AFF","LDA","1","LDC","0","AFF","LDA","0","LDC","1","AFF",
                 "LDV","0","LDV","2","INFE","JIF","37","LDA","1","LDV","0",
                 "LDV","1","ADD","AFF","LDA","0","LDV","0","INC","AFF","JMP",
                 "14","LDV","1","WRTLN","STOP"));
 
-        List<Integer> pilex = new ArrayList<>(Arrays.asList(0,0,0,0,0,0,0,0,
+        List<Integer> pilex = new ArrayList<Integer>(Arrays.asList(0,0,0,0,0,0,0,0,
                 0,0,0,0,0,0,0,0,0,0,0,0,0,0));
 
         int spx = 2;

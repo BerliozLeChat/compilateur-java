@@ -21,11 +21,11 @@ public class GPLBuilder {
                      break;
             case 3 : p1 = pile.pop();
                      p2 = pile.pop();
-                     pile.push(new Union(p1,p2));
+                     pile.push(new Union(p2,p1));
                      break;
             case 4 : p1 = pile.pop();
                      p2 = pile.pop();
-                     pile.push(new Conc(p1,p2));
+                     pile.push(new Conc(p2,p1));
                      break;
             case 5 : pile.push(sc);
                      break;
